@@ -1,17 +1,19 @@
 import React from 'react';
-import CreateTask from '/Users/mergestackemployee/todo/src/components/createTask.js';
 
 const TaskList = ({ tasks, onDelete }) => {
     if (!tasks) {
         return null;
-      }
-  return (
-    <div>
-      {tasks.map((task) => (
-        <CreateTask key={task.id} {...task} onDelete={onDelete} />
-      ))}
-    </div>
-  );
+    }
+    return (
+        <div>
+            {tasks.map((task) => (
+                <div key={task.id}>
+                    <p>{task.name}</p>
+                    <button onClick={() => onDelete(task.id)}>Delete</button>
+                </div>
+            ))}
+        </div>
+    );
 };
 
 export default TaskList;
