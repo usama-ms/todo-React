@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import './App.css';
-import AddTaskInput from "/Users/mergestackemployee/todo/src/components/addTaskInput";
-import TaskList from '/Users/mergestackemployee/todo/src/components/tasksList.js';
+import '/Users/mergestackemployee/todo/src/components/App.css';
+import AddTaskInput from "./AddTask/addTask.js";
+import TaskList from '/Users/mergestackemployee/todo/src/components/TaskList/tasksList.js';
 
 
 function App() {

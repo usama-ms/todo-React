@@ -1,8 +1,8 @@
 import React from 'react';
 
-const DeleteTaskButton = ({ onDelete, taskId }) => {
+const DeleteTaskButton = ({ setTasks, taskId }) => {
   const handleDeleteClick = () => {
-    onDelete(taskId);
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
   return (

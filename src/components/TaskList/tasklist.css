@@ -2,18 +2,21 @@
   display: flex;
   justify-content: space-between;
 }
-.delete-btn{
+
+.delete-btn {
   background: white;
   border: none;
 }
-.edit-btn{
+
+.edit-btn {
   background: white;
   border: none;
 }
-.btns-container{
-  position: relative;
-  top: 1.4em;
+
+.btns-container {
+  display: flex;
 }
-.task-container{
+
+.task-container {
   border-bottom: 1px solid black;
 }

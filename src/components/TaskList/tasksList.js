@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import '/Users/mergestackemployee/todo/src/components/tasklist.css';
+import DeleteTaskButton from '../DeleteTask/deleteTask.js';
+import '/Users/mergestackemployee/todo/src/components/TaskList/tasklist.css';
+import EditTaskButton from '../EditTask/editTask.js';
+import Checkbox from '/Users/mergestackemployee/todo/src/components/CheckBox/checkBox.js';
 
-const TaskList = ({ tasks, setTasks, }) => {
+const TaskList = ({ tasks, setTasks }) => {
     const [editableTaskId, setEditableTaskId] = useState(null);
-    const handleDeleteTask = (taskId) => {
-        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-    };
+
     const handleToggleEdit = (taskId) => {
         setEditableTaskId(taskId === editableTaskId ? null : taskId);
     };
@@ -37,41 +38,29 @@ const TaskList = ({ tasks, setTasks, }) => {
             {tasks.map((task) => (
                 <div key={task.id} className='taskitems task-container'>
                     {editableTaskId === task.id ? (
-                        <>
-                            <form onSubmit={(e) => { e.preventDefault(); handleSaveTask(task.id, e.target.elements.taskInput.value) }}>
-                                <input
-                                    name="taskInput"
-                                    type="text"
-                                    defaultValue={task.name}
-                                    autoFocus
-                                />
-                            </form>
-                        </>
+                        <form onSubmit={(e) => { e.preventDefault(); handleSaveTask(task.id, e.target.elements.taskInput.value) }}>
+                            <input name="taskInput" type="text"
+                                defaultValue={task.name} autoFocus
+                            />
+                        </form>
                     ) : (
                         <div className='taskitems' key={task.id} style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
                             <>
-                                <input
-                                    type="checkbox"
-                                    checked={task.isCompleted}
-                                    onChange={() => handleToggleComplete(task.id)}
+                                <Checkbox
+                                    setTasks={setTasks} taskId={task.id}
                                 />
                                 <p>{task.name}</p>
                             </>
                         </div>
                     )}
                     <div className='btns-container'>
-                        <button className='delete-btn' onClick={() => handleDeleteTask(task.id)}>
-                            <i className="fa-solid fa-trash-can"></i>
-                        </button>
-                        <button className='edit-btn' onClick={() => handleToggleEdit(task.id)}>
-                            <i className="fa-solid fa-pen-to-square"></i>
-                        </button>
+                        <DeleteTaskButton setTasks={setTasks} taskId={task.id} />
+                        <EditTaskButton onEdit={handleToggleEdit} taskId={task.id} taskName={task.name} />
                     </div>
                 </div>
             ))}
         </div>
     );
-
 };
 
 export default TaskList;
