@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import '../components/app.css';
-import AddTaskInput from "./AddTask/AddTask.js";
-import TaskList from './TaskList/TasksList.js';
+import 'src/components/app.css';
+import AddTaskInput from "src/components/AddTask/AddTask.js";
+import TaskList from 'src/components/TaskList/TaskList.js';
 
 function App() {
   const [tasks, setTasks] = useState([]);
