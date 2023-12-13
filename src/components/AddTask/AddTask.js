@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { addTask } from 'src/todoSlice/TasksSlice.js';
-export default function AddTaskInput() {
 
+const AddTaskInput = () => {
   const dispatch = useDispatch();
 
-  const handleInputKeyPress = (event) => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
     const newTask = event.target.elements.taskInput.value.trim();
     if (newTask !== "") {
@@ -16,7 +16,7 @@ export default function AddTaskInput() {
   return (
     <>
       <h1>My Todo</h1>
-      <form onSubmit={handleInputKeyPress}>
+      <form onSubmit={onSubmitHandler}>
         <input
           name="taskInput"
           className="add-todo-input"
@@ -27,3 +27,4 @@ export default function AddTaskInput() {
     </>
   );
 }
+export default AddTaskInput;

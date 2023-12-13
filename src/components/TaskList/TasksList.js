@@ -8,15 +8,11 @@ import Checkbox from 'src/components/Checkbox/Checkbox.js';
 
 const TaskList = () => {
 
-    const tasks = useSelector((state) => state.tasks.tasks);
+    const tasks = useSelector((state) => state.todoList.tasks);
     const dispatch = useDispatch();
     const [editableTaskId, setEditableTaskId] = useState(null);
 
-    const handleToggleEdit = (taskId) => {
-        setEditableTaskId(taskId === editableTaskId ? null : taskId);
-    };
-
-    const handleSaveTask = (taskId, newName) => {
+    const editTaskHandler = (taskId, newName) => {
         dispatch(editTask({ taskId, newName }));
         setEditableTaskId(null);
     };
@@ -25,7 +21,7 @@ const TaskList = () => {
             {tasks.map((task) => (
                 <div key={task.id} className='taskitems task-container'>
                     {editableTaskId === task.id ? (
-                        <form onSubmit={(event) => { event.preventDefault(); handleSaveTask(task.id, event.target.elements.taskInput.value) }}>
+                        <form onSubmit={(event) => { editTaskHandler(task.id, event.target.elements.taskInput.value) }}>
                             <input name="taskInput" type="text"
                                 defaultValue={task.name} autoFocus
                             />
@@ -42,7 +38,13 @@ const TaskList = () => {
                     )}
                     <div className='btns-container'>
                         <DeleteTaskButton taskId={task.id} />
-                        <EditTaskButton onEdit={handleToggleEdit} taskId={task.id} taskName={task.name} />
+                        <EditTaskButton
+                            onEdit={editTaskHandler}
+                            taskId={task.id}
+                            taskName={task.name}
+                            setEditableTaskId={setEditableTaskId}
+                            editableTaskId={editableTaskId}
+                        />
                     </div>
                 </div>
             ))}

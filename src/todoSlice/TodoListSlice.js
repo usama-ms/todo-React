@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const tasksSlice = createSlice({
-  name: 'tasks',
+const todoListSlice = createSlice({
+  name: 'todoList',
   initialState: {
     tasks: [],
   },
@@ -27,5 +27,5 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { addTask, deleteTask, editTask, toggleComplete } = tasksSlice.actions;
-export default tasksSlice.reducer;
+export const { addTask, deleteTask, editTask, toggleComplete } = todoListSlice.actions;
+export default todoListSlice.reducer;
