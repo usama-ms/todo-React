@@ -1,8 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteTask } from '/Users/mergestackemployee/todo/src/todoSlice/TasksSlice.js';
 
-const DeleteTaskButton = ({ setTasks, taskId }) => {
+const DeleteTaskButton = ({ taskId }) => {
+  const dispatch = useDispatch();
+
   const handleDeleteClick = () => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    dispatch(deleteTask(taskId));
   };
 
   return (
@@ -13,3 +17,19 @@ const DeleteTaskButton = ({ setTasks, taskId }) => {
 };
 
 export default DeleteTaskButton;
+
+// import React from 'react';
+
+// const DeleteTaskButton = ({ setTasks, taskId }) => {
+//   const handleDeleteClick = () => {
+//     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+//   };
+
+//   return (
+//     <button className='delete-btn' onClick={handleDeleteClick}>
+//       <i className="fa-solid fa-trash-can"></i>
+//     </button>
+//   );
+// };
+
+// export default DeleteTaskButton;
