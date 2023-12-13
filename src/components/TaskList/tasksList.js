@@ -1,9 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
-import DeleteTaskButton from '../DeleteTask/deleteTask.js';
-import '/Users/mergestackemployee/todo/src/components/TaskList/tasklist.css';
-import EditTaskButton from '../EditTask/editTask.js';
-import Checkbox from '/Users/mergestackemployee/todo/src/components/CheckBox/checkBox.js';
+import React, { useState } from 'react';
+import DeleteTaskButton from '../DeleteTask/DeleteTask.js';
+import '../TaskList/tasklist.css';
+import EditTaskButton from '../EditTask/EditTask.js';
+import Checkbox from '../CheckBox/CheckBox.js';
 
 const TaskList = ({ tasks, setTasks }) => {
     const [editableTaskId, setEditableTaskId] = useState(null);
@@ -19,14 +18,6 @@ const TaskList = ({ tasks, setTasks }) => {
             )
         );
         handleToggleEdit(taskId);
-    };
-
-    const handleToggleComplete = (taskId) => {
-        setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-                task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
-            )
-        );
     };
 
     if (!tasks) {
