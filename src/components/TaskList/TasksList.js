@@ -1,36 +1,31 @@
 import React, { useState } from 'react';
-import DeleteTaskButton from '../DeleteTask/DeleteTask.js';
-import '../TaskList/tasklist.css';
-import EditTaskButton from '../EditTask/EditTask.js';
-import Checkbox from '../CheckBox/CheckBox.js';
+import { useSelector, useDispatch } from 'react-redux';
+import 'src/components/TaskList/taskList.css';
+import { editTask } from 'src/todoSlice/TodoListSlice';
+import DeleteTaskButton from 'src/components/DeleteTask/DeleteTask.js';
+import EditTaskButton from 'src/components/EditTask/EditTask.js';
+import Checkbox from 'src/components/CheckBox/CheckBox.js';
 
-const TaskList = ({ tasks, setTasks }) => {
+const TaskList = () => {
+
+    const tasks = useSelector((state) => state.todoList.tasks);
+    const dispatch = useDispatch();
     const [editableTaskId, setEditableTaskId] = useState(null);
 
-    const handleToggleEdit = (taskId) => {
-        setEditableTaskId(taskId === editableTaskId ? null : taskId);
+    const editTaskHandler = (event) => {
+        event.preventDefault();
+        const newName = event.currentTarget.querySelector('input[name="taskInput"]').value;
+        const taskId = parseInt(event.currentTarget.querySelector('input[name="taskInput"]').dataset.taskId);
+        dispatch(editTask({ taskId, newName }));
+        setEditableTaskId(null);
     };
-
-    const handleSaveTask = (taskId, newName) => {
-        setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-                task.id === taskId ? { ...task, name: newName } : task
-            )
-        );
-        handleToggleEdit(taskId);
-    };
-
-    if (!tasks) {
-        return null;
-    }
-
     return (
         <div>
             {tasks.map((task) => (
                 <div key={task.id} className='taskitems task-container'>
                     {editableTaskId === task.id ? (
-                        <form onSubmit={(e) => { e.preventDefault(); handleSaveTask(task.id, e.target.elements.taskInput.value) }}>
-                            <input name="taskInput" type="text"
+                        <form onSubmit={editTaskHandler}>
+                            <input name="taskInput" type="text" data-task-id={task.id} data-testid="taskInput"
                                 defaultValue={task.name} autoFocus
                             />
                         </form>
@@ -38,15 +33,19 @@ const TaskList = ({ tasks, setTasks }) => {
                         <div className='taskitems' key={task.id} style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
                             <>
                                 <Checkbox
-                                    setTasks={setTasks} taskId={task.id}
+                                    taskId={task.id}
                                 />
                                 <p>{task.name}</p>
                             </>
                         </div>
                     )}
                     <div className='btns-container'>
-                        <DeleteTaskButton setTasks={setTasks} taskId={task.id} />
-                        <EditTaskButton onEdit={handleToggleEdit} taskId={task.id} taskName={task.name} />
+                        <DeleteTaskButton taskId={task.id} />
+                        <EditTaskButton
+                            taskId={task.id}
+                            setEditableTaskId={setEditableTaskId}
+                            editableTaskId={editableTaskId}
+                        />
                     </div>
                 </div>
             ))}
@@ -54,4 +53,4 @@ const TaskList = ({ tasks, setTasks }) => {
     );
 };
 
-export default TaskList;
+export default TaskList
