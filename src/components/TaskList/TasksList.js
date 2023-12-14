@@ -12,8 +12,10 @@ const TaskList = () => {
     const dispatch = useDispatch();
     const [editableTaskId, setEditableTaskId] = useState(null);
 
-    const editTaskHandler = ({ event, taskId }) => {
+    const editTaskHandler = (event) => {
+        event.preventDefault();
         const newName = event.currentTarget.querySelector('input[name="taskInput"]').value;
+        const taskId = parseInt(event.currentTarget.querySelector('input[name="taskInput"]').dataset.taskId);
         dispatch(editTask({ taskId, newName }));
         setEditableTaskId(null);
     };
@@ -22,8 +24,8 @@ const TaskList = () => {
             {tasks.map((task) => (
                 <div key={task.id} className='taskitems task-container'>
                     {editableTaskId === task.id ? (
-                        <form onSubmit={(event) => { editTaskHandler({ event, taskId: task.id }) }}>
-                            <input name="taskInput" type="text"
+                        <form onSubmit={editTaskHandler}>
+                            <input name="taskInput" type="text" data-task-id={task.id} data-testid="taskInput"
                                 defaultValue={task.name} autoFocus
                             />
                         </form>
@@ -50,4 +52,5 @@ const TaskList = () => {
         </div>
     );
 };
+
 export default TaskList
