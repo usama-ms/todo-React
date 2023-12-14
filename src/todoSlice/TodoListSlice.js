@@ -24,8 +24,13 @@ const todoListSlice = createSlice({
         task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
       );
     },
+    fetchTasks: () => {
+    },
+    fetchTasksSuccess: (state, action) => {
+      state.tasks = action.payload;
+    },
   },
 });
 
-export const { addTask, deleteTask, editTask, toggleComplete } = todoListSlice.actions;
+export const { addTask, deleteTask, editTask, toggleComplete, fetchTasksSuccess, fetchTasks } = todoListSlice.actions;
 export default todoListSlice.reducer;
