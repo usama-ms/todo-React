@@ -1,6 +1,6 @@
 import 'src/components/app.css';
 import AddTaskInput from "src/components/AddTask/AddTask.js";
-import TaskList from 'src/components/TaskList/TaskList.js';
+import TaskList from 'src/components/TaskList/TasksList.js';
 
 function App() {
 

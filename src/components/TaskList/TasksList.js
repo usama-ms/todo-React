@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import 'src/components/TaskList/taskList.css';
-import { editTask } from 'src/todoSlice/TasksSlice.js';
+import { editTask } from 'src/todoSlice/TodoListSlice';
 import DeleteTaskButton from 'src/components/DeleteTask/DeleteTask.js';
 import EditTaskButton from 'src/components/EditTask/EditTask.js';
-import Checkbox from 'src/components/Checkbox/Checkbox.js';
+import Checkbox from 'src/components/CheckBox/CheckBox.js';
 
 const TaskList = () => {
 
@@ -12,7 +12,8 @@ const TaskList = () => {
     const dispatch = useDispatch();
     const [editableTaskId, setEditableTaskId] = useState(null);
 
-    const editTaskHandler = (taskId, newName) => {
+    const editTaskHandler = ({ event, taskId }) => {
+        const newName = event.currentTarget.querySelector('input[name="taskInput"]').value;
         dispatch(editTask({ taskId, newName }));
         setEditableTaskId(null);
     };
@@ -21,7 +22,7 @@ const TaskList = () => {
             {tasks.map((task) => (
                 <div key={task.id} className='taskitems task-container'>
                     {editableTaskId === task.id ? (
-                        <form onSubmit={(event) => { editTaskHandler(task.id, event.target.elements.taskInput.value) }}>
+                        <form onSubmit={(event) => { editTaskHandler({ event, taskId: task.id }) }}>
                             <input name="taskInput" type="text"
                                 defaultValue={task.name} autoFocus
                             />
@@ -39,9 +40,7 @@ const TaskList = () => {
                     <div className='btns-container'>
                         <DeleteTaskButton taskId={task.id} />
                         <EditTaskButton
-                            onEdit={editTaskHandler}
                             taskId={task.id}
-                            taskName={task.name}
                             setEditableTaskId={setEditableTaskId}
                             editableTaskId={editableTaskId}
                         />

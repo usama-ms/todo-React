@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { addTask } from 'src/todoSlice/TasksSlice.js';
+import { addTask } from 'src/todoSlice/TodoListSlice.js';
 
 const AddTaskInput = () => {
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const onSubmitHandler = (event) => {
     event.preventDefault();
     const newTask = event.target.elements.taskInput.value.trim();
@@ -27,4 +27,5 @@ const AddTaskInput = () => {
     </>
   );
 }
+
 export default AddTaskInput;
