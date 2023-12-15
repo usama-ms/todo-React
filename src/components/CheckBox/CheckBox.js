@@ -1,13 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleComplete } from 'src/todoSlice/TodoListSlice.js';
+import { toggleComplete } from 'src/components/TodoListSlice.js';
 
 const Checkbox = ({ taskId }) => {
 
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.todoList.tasks);
-  const handleToggleComplete = () => {
-    dispatch(toggleComplete(taskId));
+  const handleToggleComplete = (event) => {
+    const isCompleted=event.target.checked;
+    dispatch(toggleComplete({taskId,isCompleted}));
   };
 
   return (

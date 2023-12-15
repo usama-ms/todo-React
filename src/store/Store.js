@@ -1,6 +1,6 @@
 import { configureStore,getDefaultMiddleware } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import todoListReducer from 'src/todoSlice/TodoListSlice';
+import todoListReducer from 'src/components/TodoListSlice';
 import rootSaga from 'src/sagas/Sagas';
 
 const sagaMiddleware = createSagaMiddleware();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import 'src/components/TaskList/taskList.css';
-import { editTask } from 'src/todoSlice/TodoListSlice';
+import { editTask } from 'src/components/TodoListSlice';
 import DeleteTaskButton from 'src/components/DeleteTask/DeleteTask.js';
 import EditTaskButton from 'src/components/EditTask/EditTask.js';
 import Checkbox from 'src/components/CheckBox/CheckBox.js';
