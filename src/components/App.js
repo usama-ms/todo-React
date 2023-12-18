@@ -1,13 +1,15 @@
-import 'src/components/app.css';
-import AddTaskInput from "src/components/AddTask/AddTask.js";
-import TaskList from 'src/components/TaskList/TasksList.js';
+import React, { useEffect } from 'react';
 
-function App() {
+import 'src/components/app.css';
+import AddTask from 'src/container/AddTask'
+import TaskList from 'src/container/TaskList';
+
+const App = () => {
 
   return (
     <div className="body">
       <div className="container">
-        <AddTaskInput />
+        <AddTask />
         <TaskList />
       </div>
     </div>
