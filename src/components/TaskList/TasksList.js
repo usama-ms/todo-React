@@ -5,12 +5,11 @@ import DeleteTask from 'src/container/DeleteTask'
 import CheckBox from 'src/container/ToggleComplete'
 import EditTaskButton from 'src/components/EditTask/EditTask.js';
 
-
 const TaskList = ({ editTask, tasks, fetchTasks }) => {
 
     useEffect(() => {
         fetchTasks()
-    },[fetchTasks])
+    }, [fetchTasks])
 
     const [editableTaskId, setEditableTaskId] = useState(null);
     const editTaskHandler = (event) => {

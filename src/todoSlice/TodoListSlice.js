@@ -19,13 +19,13 @@ const todoListSlice = createSlice({
       );
     },
     toggleComplete: (state, action) => {
-      const {taskId,isCompleted} = action.payload;
+      const { taskId, isCompleted } = action.payload;
       state.tasks = state.tasks.map((task) =>
         task.id === taskId ? { ...task, isCompleted: isCompleted } : task
       );
     },
     fetchTasks: () => {
-     },
+    },
     fetchTasksSuccess: (state, action) => {
       state.tasks = action.payload;
     },
