@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import CheckBox from 'src/components/CheckBox/CheckBox';
+import CheckBoxComponent from 'src/components/CheckBox/CheckBox';
 import { toggleComplete } from 'src/todoSlice/TodoListSlice';
 
 const mapStateToProps = (state) => ({
@@ -10,6 +10,6 @@ const mapDispatchToProps = {
     toggleComplete,
 };
 
-const ConnectedCheckBox = connect(mapStateToProps, mapDispatchToProps)(CheckBox);
+const CheckBox = connect(mapStateToProps, mapDispatchToProps)(CheckBoxComponent);
 
-export default ConnectedCheckBox;
+export default CheckBox;

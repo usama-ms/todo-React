@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import 'src/components/TaskList/taskList.css';
-import ConnectedDeleteTask from 'src/container/DeleteTask'
-import ConnectedCheckBox from 'src/container/ToggleComplete'
+import DeleteTask from 'src/container/DeleteTask'
+import CheckBox from 'src/container/ToggleComplete'
 import EditTaskButton from 'src/components/EditTask/EditTask.js';
 
-const TaskList = ({ editTask, tasks }) => {
+
+const TaskList = ({ editTask, tasks, fetchTasks }) => {
+
+    useEffect(() => {
+        fetchTasks()
+    },[fetchTasks])
 
     const [editableTaskId, setEditableTaskId] = useState(null);
     const editTaskHandler = (event) => {
@@ -28,7 +33,7 @@ const TaskList = ({ editTask, tasks }) => {
                     ) : (
                         <div className='taskitems' key={task.id} style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
                             <>
-                                <ConnectedCheckBox
+                                <CheckBox
                                     taskId={task.id}
                                 />
                                 <p>{task.name}</p>
@@ -36,7 +41,7 @@ const TaskList = ({ editTask, tasks }) => {
                         </div>
                     )}
                     <div className='btns-container'>
-                        <ConnectedDeleteTask taskId={task.id} />
+                        <DeleteTask taskId={task.id} />
                         <EditTaskButton
                             taskId={task.id}
                             setEditableTaskId={setEditableTaskId}
