@@ -1,12 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteTask } from 'src/components/TodoListSlice.js';
 
-const DeleteTaskButton = ({ taskId }) => {
+const DeleteTaskButton = ({ taskId, deleteTask }) => {
 
-  const dispatch = useDispatch();
   const handleDeleteClick = () => {
-    dispatch(deleteTask(taskId));
+    deleteTask(taskId);
   };
 
   return (

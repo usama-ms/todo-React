@@ -1,6 +1,7 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
-import { fetchTasksSuccess, fetchTasks, addTask, editTask, deleteTask, toggleComplete } from 'src/components/TodoListSlice';
+
 import todoApi from 'src/api/todoApi';
+import { fetchTasksSuccess, fetchTasks, addTask, editTask, deleteTask, toggleComplete } from 'src/todoSlice/TodoListSlice';
 
 function* fetchTasksSaga() {
   try {
@@ -36,7 +37,6 @@ function* deleteTaskSaga(action) {
 }
 function* toggleCompleteSaga(action) {
   try {
-    console.log(action.payload);
     yield call(todoApi.editTask, action.payload.taskId, { isCompleted: action.payload.isCompleted });
   } catch (error) {
     console.error('Error toggling task:', error);
@@ -48,5 +48,5 @@ export default function* rootSaga() {
   yield takeEvery(addTask.type, addTaskSaga);
   yield takeEvery(editTask.type, editTaskSaga);
   yield takeEvery(deleteTask.type, deleteTaskSaga);
-  yield takeEvery(toggleComplete.type, toggleCompleteSaga); 
+  yield takeEvery(toggleComplete.type, toggleCompleteSaga);
 }

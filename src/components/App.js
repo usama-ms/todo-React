@@ -1,23 +1,20 @@
 import React, { useEffect } from 'react';
+
 import 'src/components/app.css';
-import AddTaskInput from "src/components/AddTask/AddTask.js";
-import TaskList from 'src/components/TaskList/TasksList.js';
-import { useDispatch } from 'react-redux';
-import { fetchTasks } from 'src/components/TodoListSlice';
+import ConnectedAddTaskInput from 'src/container/AddTask'
+import ConnectedTaskList from 'src/container/TaskList';
 
-function App() {
-
-  const dispatch = useDispatch();
+function App( {fetchTasks} ) {
 
   useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
+    fetchTasks();
+  }, [fetchTasks]);
 
   return (
     <div className="body">
       <div className="container">
-        <AddTaskInput />
-        <TaskList />
+        <ConnectedAddTaskInput />
+        <ConnectedTaskList />
       </div>
     </div>
   );

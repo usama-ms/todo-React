@@ -1,8 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { addTask } from 'src/components/TodoListSlice.js';
 import { useForm } from "react-hook-form"
 
-const AddTaskInput = () => {
+const AddTaskInput = ({ addTask }) => {
 
   const {
     register,
@@ -10,11 +8,10 @@ const AddTaskInput = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const dispatch = useDispatch();
   const onSubmitHandler = (data) => {
     const newTask = data.taskInput.trim();
     if (newTask !== "") {
-      dispatch(addTask({ id: Date.now(), name: newTask, isCompleted: false }));
+      addTask({ id: Date.now(), name: newTask, isCompleted: false });
       reset();
     }
   };

@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
 import 'src/components/TaskList/taskList.css';
-import { editTask } from 'src/components/TodoListSlice';
-import DeleteTaskButton from 'src/components/DeleteTask/DeleteTask.js';
+import ConnectedDeleteTask from 'src/container/DeleteTask'
+import ConnectedCheckBox from 'src/container/ToggleComplete'
 import EditTaskButton from 'src/components/EditTask/EditTask.js';
-import Checkbox from 'src/components/CheckBox/CheckBox.js';
 
-const TaskList = () => {
+const TaskList = ({ editTask, tasks }) => {
 
-    const tasks = useSelector((state) => state.todoList.tasks);
-    const dispatch = useDispatch();
     const [editableTaskId, setEditableTaskId] = useState(null);
-
     const editTaskHandler = (event) => {
         event.preventDefault();
         const newName = event.currentTarget.querySelector('input[name="taskInput"]').value;
         const taskId = parseInt(event.currentTarget.querySelector('input[name="taskInput"]').dataset.taskId);
-        dispatch(editTask({ taskId, newName }));
+        editTask({ taskId, newName });
         setEditableTaskId(null);
     };
     return (
@@ -32,7 +28,7 @@ const TaskList = () => {
                     ) : (
                         <div className='taskitems' key={task.id} style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
                             <>
-                                <Checkbox
+                                <ConnectedCheckBox
                                     taskId={task.id}
                                 />
                                 <p>{task.name}</p>
@@ -40,7 +36,7 @@ const TaskList = () => {
                         </div>
                     )}
                     <div className='btns-container'>
-                        <DeleteTaskButton taskId={task.id} />
+                        <ConnectedDeleteTask taskId={task.id} />
                         <EditTaskButton
                             taskId={task.id}
                             setEditableTaskId={setEditableTaskId}
