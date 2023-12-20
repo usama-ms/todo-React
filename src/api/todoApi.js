@@ -24,4 +24,3 @@ const todoApi = {
 };
 
 export const {getTasks,addTask,editTask,deleteTask}=todoApi
-
