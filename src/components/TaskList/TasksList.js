@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import 'src/components/TaskList/taskList.css';
-import {editTask} from 'src/api/todoApi';
+import {editTask, getTasks} from 'src/api/todoApi';
 import DeleteTask from 'src/components/DeleteTask/DeleteTask'
 import CheckBox from 'src/components/CheckBox/CheckBox'
 import EditTaskButton from 'src/components/EditTask/EditTask.js';
@@ -12,7 +12,7 @@ const TaskList = () => {
     const tasksSate = useTasksState();
     const queryClient = useQueryClient();
 
-    useQuery('getTasks', todoApi.getTasks, {
+    useQuery('getTasks', getTasks, {
         onSuccess: (data) => {
             todoStateController.setTasks(data);
         },
