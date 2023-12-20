@@ -1,27 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import 'src/components/TaskList/taskList.css';
-import DeleteTask from 'src/container/DeleteTask'
-import CheckBox from 'src/container/ToggleComplete'
+import {editTask} from 'src/api/todoApi';
+import DeleteTask from 'src/components/DeleteTask/DeleteTask'
+import CheckBox from 'src/components/CheckBox/CheckBox'
 import EditTaskButton from 'src/components/EditTask/EditTask.js';
+import { useTasksState, todoStateController } from 'src/store/todoController.js';
 
-const TaskList = ({ editTask, tasks, fetchTasks }) => {
+const TaskList = () => {
+    const tasksSate = useTasksState();
+    const queryClient = useQueryClient();
 
-    useEffect(() => {
-        fetchTasks()
-    }, [fetchTasks])
+    useQuery('getTasks', todoApi.getTasks, {
+        onSuccess: (data) => {
+            todoStateController.setTasks(data);
+        },
+    });
 
     const [editableTaskId, setEditableTaskId] = useState(null);
+
+    const editTaskMutation = useMutation(editTask, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('getTasks');
+        },
+    });
+
     const editTaskHandler = (event) => {
         event.preventDefault();
         const newName = event.currentTarget.querySelector('input[name="taskInput"]').value;
         const taskId = parseInt(event.currentTarget.querySelector('input[name="taskInput"]').dataset.taskId);
-        editTask({ taskId, newName });
+        editTaskMutation.mutate({
+            taskId: taskId,
+            updatedTask: { name: newName }
+        });
         setEditableTaskId(null);
     };
+    const { tasks } = tasksSate.get();
+
     return (
         <div>
-            {tasks.map((task) => (
+            {tasks?.map((task) => (
                 <div key={task.id} className='taskitems task-container'>
                     {editableTaskId === task.id ? (
                         <form onSubmit={editTaskHandler}>
@@ -32,7 +51,7 @@ const TaskList = ({ editTask, tasks, fetchTasks }) => {
                     ) : (
                         <div className='taskitems' key={task.id} style={{ textDecoration: task.isCompleted ? 'line-through' : 'none' }}>
                             <>
-                                <CheckBox
+                                <CheckBox tasks={tasks}
                                     taskId={task.id}
                                 />
                                 <p>{task.name}</p>

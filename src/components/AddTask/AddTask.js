@@ -1,8 +1,21 @@
 import { useForm } from "react-hook-form"
+import { useMutation, useQueryClient } from "react-query";
 
+import {addTask} from 'src/api/todoApi';
 import 'src/components/AddTask/addTask.css';
+import { useTasksState } from 'src/store/todoController.js';
 
-const AddTaskInput = ({ addTask, tasks }) => {
+const AddTaskInput = () => {
+
+  const tasksSate = useTasksState();
+  const { tasks } = tasksSate.get();
+  const queryClient = useQueryClient();
+
+  const addTaskMutation = useMutation(addTask, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("getTasks");
+    },
+  });
 
   const {
     register,
@@ -15,7 +28,7 @@ const AddTaskInput = ({ addTask, tasks }) => {
     const newTask = data.taskInput.trim();
     const isDuplicate = tasks.some(task => task.name === newTask);
     if (newTask !== "" && !isDuplicate) {
-      addTask({ id: Date.now(), name: newTask, isCompleted: false });
+      addTaskMutation.mutate({ id: Date.now(), name: newTask, isCompleted: false });
       reset();
     } else if (isDuplicate) {
       setError("taskInput", {
@@ -24,7 +37,6 @@ const AddTaskInput = ({ addTask, tasks }) => {
       });
     }
   };
-
 
   return (
     <>

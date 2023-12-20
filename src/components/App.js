@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import 'src/components/app.css';
-import AddTask from 'src/container/AddTask'
-import TaskList from 'src/container/TaskList';
+import AddTask from 'src/components/AddTask/AddTask'
+import TaskList from 'src/components/TaskList/TasksList';
 
 const App = () => {
 
+  const queryClient = new QueryClient();
   return (
     <div className="body">
       <div className="container">
-        <AddTask />
-        <TaskList />
+        <QueryClientProvider client={queryClient}>
+          <AddTask />
+          <TaskList />
+        </QueryClientProvider>
       </div>
     </div>
   );

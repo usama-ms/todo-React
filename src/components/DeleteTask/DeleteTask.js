@@ -1,9 +1,19 @@
 import React from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 
-const DeleteTaskButton = ({ taskId, deleteTask }) => {
+import {deleteTask} from 'src/api/todoApi';
+
+const DeleteTaskButton = ({ taskId }) => {
+  const queryClient = useQueryClient();
+
+  const deleteTaskMutation = useMutation(() => deleteTask(taskId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('getTasks');
+    },
+  });
 
   const handleDeleteClick = () => {
-    deleteTask(taskId);
+    deleteTaskMutation.mutate();
   };
 
   return (

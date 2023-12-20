@@ -7,15 +7,15 @@ const api = axios.create({
 const todoApi = {
     getTasks: async () => {
         const response = await api.get('/')
-        return response
+        return response.data
     },
     addTask: async (newTask) => {
         const response = await api.post('/', newTask)
         return response
     },
-    editTask: async (taskId, updatedTask) => {
-        const response = await api.patch(`/${taskId}`, updatedTask)
-        return response
+    editTask: ({ taskId, updatedTask }) => {
+        const response = api.patch(`/${taskId}`, updatedTask);
+        return response;
     },
     deleteTask: async (taskId) => {
         const response = await api.delete(`/${taskId}`)
@@ -23,4 +23,5 @@ const todoApi = {
     },
 };
 
-export default todoApi;
+export const {getTasks,addTask,editTask,deleteTask}=todoApi
+
